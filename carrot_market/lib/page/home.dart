@@ -122,7 +122,17 @@ class _HomeState extends State<Home> {
                   width: 100,
                   height: 100,
                 ),
-              )
+              ),
+              Container(
+                child: Column(
+                  children: [
+                    Text(datas[index]["title"].toString()),
+                    Text(datas[index]["location"].toString()),
+                    Text(datas[index]["price"].toString()),
+                    Text(datas[index]["likes"].toString()),
+                  ],
+                )
+              ),
             ],
           )
         );
