@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -110,10 +111,18 @@ class _HomeState extends State<Home> {
         ],
       );
   }
+
+  final oCcy = new NumberFormat("#,###", "ko_KR");
+  String calcStringToWon(String priceString){
+    return "${oCcy.format(int.parse(priceString))}원";
+  }
+
   Widget _bodyWidget(){
     return ListView.separated(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       itemBuilder: (BuildContext _context, int index){
         return Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Row(
             children: [
               ClipRRect(
@@ -123,15 +132,51 @@ class _HomeState extends State<Home> {
                   height: 100,
                 ),
               ),
-              Container(
-                child: Column(
-                  children: [
-                    Text(datas[index]["title"].toString()),
-                    Text(datas[index]["location"].toString()),
-                    Text(datas[index]["price"].toString()),
-                    Text(datas[index]["likes"].toString()),
-                  ],
-                )
+              Expanded(
+                child: Container(
+                  height: 100,
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        datas[index]["title"].toString(),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        datas[index]["location"].toString(),
+                        style: TextStyle(
+                          fontSize: 12, color: Colors.black.withOpacity(0.3)
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        calcStringToWon(datas[index]["price"].toString()),
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(height: 5),
+                      Expanded(
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              SvgPicture.asset(
+                                "assets/svg/heart_off.svg",
+                                width: 13,
+                                height: 13,
+                              ),
+                              SizedBox(width: 5),
+                              Text(datas[index]["likes"].toString()),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ),
               ),
             ],
           )
