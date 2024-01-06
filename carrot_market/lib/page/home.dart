@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
   }
 
   // Change the return type to PreferredSizeWidget
-  PreferredSizeWidget _appbarWidget(){
+  PreferredSizeWidget _appbarWidget(){  // appbarWidget 부분 
     return AppBar(
         title: GestureDetector(
           onTap: (){
@@ -117,7 +117,7 @@ class _HomeState extends State<Home> {
     return "${oCcy.format(int.parse(priceString))}원";
   }
 
-  Widget _bodyWidget(){
+  Widget _bodyWidget(){ // bodyWidget 부분 
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       itemBuilder: (BuildContext _context, int index){
