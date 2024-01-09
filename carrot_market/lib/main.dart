@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'page/home.dart'; // Home 클래스를 위한 임포트
+import 'page/app.dart'; // Home 클래스를 위한 임포트
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const Home(), // Home 클래스를 여기서 사용합니다
+      home: const App(), // Home 클래스를 여기서 사용합니다
     );
   }
 }
