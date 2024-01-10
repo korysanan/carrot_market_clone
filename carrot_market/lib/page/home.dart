@@ -84,76 +84,82 @@ class _HomeState extends State<Home> {
     return FutureBuilder(
       future: _loadContents(),
       builder: (context, snapshot){ //dynamic한 이유는 선언을 안해서 class 등 귀찮으면 안해도 됨 
-        List<Map<String, String>> datas = snapshot.data;
-        return ListView.separated(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          itemBuilder: (BuildContext _context, int index){
-            return Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    child: Image.asset(datas[index]["image"].toString(),
-                      width: 100,
-                      height: 100,
+        if (snapshot.hasData) {
+          List<Map<String, String>> datas = snapshot.data as List<Map<String, String>>;
+          return ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            itemBuilder: (BuildContext _context, int index){
+              return Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      child: Image.asset(datas[index]["image"].toString(),
+                        width: 100,
+                        height: 100,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 100,
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            datas[index]["title"].toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            datas[index]["location"].toString(),
-                            style: TextStyle(
-                              fontSize: 12, color: Colors.black.withOpacity(0.3)
+                    Expanded(
+                      child: Container(
+                        height: 100,
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              datas[index]["title"].toString(),
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 15),
                             ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            calcStringToWon(datas[index]["price"].toString()),
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(height: 5),
-                          Expanded(
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/svg/heart_off.svg",
-                                    width: 13,
-                                    height: 13,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(datas[index]["likes"].toString()),
-                                ],
+                            SizedBox(height: 5),
+                            Text(
+                              datas[index]["location"].toString(),
+                              style: TextStyle(
+                                fontSize: 12, color: Colors.black.withOpacity(0.3)
                               ),
                             ),
-                          ),
-                        ],
-                      )
+                            SizedBox(height: 5),
+                            Text(
+                              calcStringToWon(datas[index]["price"].toString()),
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(height: 5),
+                            Expanded(
+                              child: Container(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/svg/heart_off.svg",
+                                      width: 13,
+                                      height: 13,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(datas[index]["likes"].toString()),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ),
                     ),
-                  ),
-                ],
-              )
-            );
-          },
-          itemCount: 10,
-          separatorBuilder: (BuildContext _context, int index){
-            return Container(height: 1, color: Colors.black.withOpacity(0.4));
-          },
-        ); 
+                  ],
+                )
+              );
+            },
+            itemCount: 10,
+            separatorBuilder: (BuildContext _context, int index){
+              return Container(height: 1, color: Colors.black.withOpacity(0.4));
+            },
+          ); 
+        } else if (snapshot.hasError){
+          return Text('Error: ${snapshot.error}');
+        } else{
+          return CircularProgressIndicator();
+        }
       }
     );
   }

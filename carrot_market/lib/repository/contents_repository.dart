@@ -3,7 +3,7 @@
 연습에서는 예를 들기 위해 선언으로 처리
 */
 class ContentsRepository{
-  Map<String, dynamic>> data = {
+  Map<String, dynamic> data = {
     "bc": [
       {
         "image": "assets/images/ara-1.jpg",
@@ -150,10 +150,10 @@ class ContentsRepository{
     ]
   };
 
-  Future<List<Map<String, String>>> loadContentsFromLocation(String Location) async {
+  Future<List<Map<String, String>>> loadContentsFromLocation(String location) async {
     // awase를 이용하려면 async 이용해줘야함 
     // API 통신 location 값을 보내주면서
-    await Future.delayed(Duration(milliseconds: 1000)); // api에서 받아와서 delay가 있다고 가정했을때 
-    return  data[location]
+    await Future.delayed(const Duration(milliseconds: 1000)); // api에서 받아와서 delay가 있다고 가정했을때 
+    return  data[location];
   }
 }
